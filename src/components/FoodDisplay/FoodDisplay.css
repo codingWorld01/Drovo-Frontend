@@ -1,0 +1,23 @@
+.food-display h2 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.food-display-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+    margin-top: 3-px;
+    gap: 30px;
+    row-gap: 50px;
+}
+
+.no-items-message {
+    grid-column: 1 / -1; /* Ensures the message spans across the grid */
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #555;
+    margin-top: 20px;
+}
+
+

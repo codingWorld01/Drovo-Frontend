@@ -1,0 +1,142 @@
+.header {
+    width: 100%;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 70vw;
+    height: 80vh;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.slideshow-images {
+    display: flex;
+    transition: transform 1s ease-in-out;
+    /* Horizontal sliding transition */
+}
+
+.slideshow-image {
+    flex: 0 0 100%;
+    /* Ensures each image takes full width of the container */
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.slideshow-nav {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+/* General Styles for Slideshow */
+.slideshow-nav button {
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 2rem;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border-radius: 50%;
+    /* Make the buttons circular */
+    width: 50px;
+    /* Define a fixed width */
+    height: 50px;
+    /* Define a fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slideshow-nav button:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* Dots for Navigation */
+.slideshow-dots {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: white;
+}
+
+.dot:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Mobile Specific Adjustments */
+/* Mobile Specific Adjustments */
+@media (max-width: 480px) {
+
+    /* Slideshow container on mobile */
+    .slideshow-container {
+        width: 100vw;
+        height: 26vh;
+    }
+
+    /* Arrows at the leftmost and rightmost sides on mobile */
+    .slideshow-nav button {
+        display: block;
+        font-size: 1.2rem;  /* Smaller font size for mobile */
+        padding: 0.3rem;    /* Reduced padding for smaller buttons */
+        background: rgba(0, 0, 0, 0.3);
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;        /* Smaller width */
+        height: 40px;       /* Smaller height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .slideshow-nav button.prev {
+        left: 0%;
+        /* Position leftmost */
+    }
+
+    .slideshow-nav button.next {
+        right: 0%;
+        /* Position rightmost */
+    }
+
+    /* Dots on mobile */
+    .slideshow-dots {
+        bottom: 5px;
+        gap: 8px;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+        /* Smaller dots */
+    }
+}
