@@ -9,6 +9,7 @@ const Header = () => {
     assetsUser.main2,
     assetsUser.main3,
     assetsUser.main4,
+    assetsUser.main5
   ];
 
   // State to track the current image index and slideshow state (active or paused)
@@ -16,8 +17,16 @@ const Header = () => {
   const [isPaused, setIsPaused] = useState(false); // Controls whether the slideshow is paused
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState(0);
-  
+
   const sliderRef = useRef(null);
+
+  // Preload images for smoother transitions
+  useEffect(() => {
+    images.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+  }, []);
 
   // Function to change the image
   const changeImage = (direction) => {
@@ -34,7 +43,7 @@ const Header = () => {
   // Set up interval for automatic image change
   useEffect(() => {
     if (!isPaused) {
-      const interval = setInterval(() => changeImage('next'), 3000); // Change image every 3 seconds
+      const interval = setInterval(() => changeImage('next'), 5000); // Change image every 5 seconds
       return () => clearInterval(interval); // Clear interval on component unmount or when paused
     }
   }, [isPaused]);
@@ -42,19 +51,19 @@ const Header = () => {
   // Drag-to-slide functionality
   const handleDragStart = (e) => {
     setIsDragging(true);
-    setDragStart(e.clientX);
+    setDragStart(e.clientX || e.touches[0].clientX);
   };
 
   const handleDragMove = (e) => {
     if (isDragging) {
-      const diff = e.clientX - dragStart;
+      const diff = (e.clientX || e.touches[0].clientX) - dragStart;
       if (diff > 100) {
         changeImage('prev');
-        setDragStart(e.clientX); // Update drag start position
+        setDragStart(e.clientX || e.touches[0].clientX); // Update drag start position
         setIsDragging(false);
       } else if (diff < -100) {
         changeImage('next');
-        setDragStart(e.clientX); // Update drag start position
+        setDragStart(e.clientX || e.touches[0].clientX); // Update drag start position
         setIsDragging(false);
       }
     }
@@ -99,7 +108,7 @@ const Header = () => {
           <button className="prev" onClick={() => changeImage('prev')}>
             &#10094;
           </button>
-          
+
           {/* Next button */}
           <button className="next" onClick={() => changeImage('next')}>
             &#10095;
@@ -112,7 +121,7 @@ const Header = () => {
             <span
               key={index}
               className={`dot ${index === currentImageIndex ? 'active' : ''}`}
-              onClick={() => changeImage(index === currentImageIndex ? '' : 'next')}
+              onClick={() => setCurrentImageIndex(index)}
             ></span>
           ))}
         </div>

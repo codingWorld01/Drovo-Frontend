@@ -32,6 +32,7 @@ import main1 from './main1.jpg'
 import main2 from './main2.jpg'
 import main3 from './main3.jpg'
 import main4 from './main4.jpg'
+import main5 from './main5.jpg'
 import Cart from './Cart.svg'
 
 export const assetsUser = {
@@ -58,6 +59,7 @@ export const assetsUser = {
     main2,
     main3,
     main4,
+    main5,
     Cart
 }
 
