@@ -20,4 +20,27 @@
     margin-top: 20px;
 }
 
+.food-item-skeleton {
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px #00000015;
+    margin-bottom: 20px;
+    transition: 0.3s;
+    padding: 10px;
+    animation: fadeIn 0.8s;
+}
 
+.food-item-image-skeleton {
+    width: 100%;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.add-btn-skeleton {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    border-radius: 20px;
+}
+
+.food-item-info .skeleton {
+    margin: 10px 0;
+}

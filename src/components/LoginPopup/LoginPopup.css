@@ -28,6 +28,39 @@
     color: black;
 }
 
+/* Style for the highlighted link */
+.highlighted-link {
+    color: orange; /* Default orange color */
+    text-decoration: none; /* Remove underline by default */
+    transition: color 0.3s ease, text-decoration 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.highlighted-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+    color: darkorange; /* Change to a darker shade of orange on hover */
+}
+
+
+.separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    color: #808080;
+    font-size: 14px;
+}
+
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #ccc;
+    margin: 0 10px;
+}
+
+
 .login-popup-title img {
     width: 16px;
     cursor: pointer;
@@ -47,6 +80,7 @@
 }
 
 .login-popup-container button {
+    margin-top: -15px;
     border: none;
     padding: 10px;
     border-radius: 4px;
@@ -60,7 +94,6 @@
     display: flex;
     align-items: start;
     gap: 8px;
-    margin-top: -15px;
 }
 
 .login-popup-condition input {

@@ -4,8 +4,10 @@ import { assetsUser } from "../../assets/assetsUser";
 import { StoreContext } from "../../context/storeContext";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import Loader from "../../components/Loader/Loader"; // Adjust the path based on your project structure
+import { Link, useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 const LoginPopup = ({ setShowLogin }) => {
     const { url, setToken, setUserType } = useContext(StoreContext);
@@ -28,6 +30,13 @@ const LoginPopup = ({ setShowLogin }) => {
         const value = event.target.value;
         setData((data) => ({ ...data, [name]: value }));
     };
+
+    const handleTermsClick = (e) => {
+        e.preventDefault(); // Prevent default link behavior
+        setShowLogin(false); // Hide the login popup
+        navigate("/terms-and-conditions"); // Navigate to Terms and Conditions
+    };
+
 
     const onSendOtp = async (event) => {
         event.preventDefault();
@@ -88,6 +97,77 @@ const LoginPopup = ({ setShowLogin }) => {
         }
         finally {
             setIsLoading(false); // Hide loader after API call finishes
+        }
+    };
+
+
+    const onGoogleSuccess = async (credentialResponse) => {
+        try {
+            const userType = data.role;
+
+            // Send the Google token to your backend to verify and get the user data
+            const response = await axios.post(`${url}/api/login/google`, {
+                token: credentialResponse.credential,
+                userType: userType
+            });
+
+            if (response.data.success) {
+                const { token, isNewUser } = response.data;
+
+                if (isNewUser) {
+                    // For new users, perform the signup flow with Google data
+                    const decodedToken = jwtDecode(credentialResponse.credential);
+
+                    const googleData = {
+                        name: decodedToken.name, // Extracted from the token
+                        email: decodedToken.email, // Extracted from the token
+                        role: data.role, // Assuming the role (user/shop) is selected before Google login
+                        password: "", // We don't need a password for Google login
+                    };
+
+
+                    // Send the Google data to the signup endpoint
+                    const signupResponse = await axios.post(`${url}/api/register-google`, googleData);
+
+                    if (signupResponse.data.success) {
+                        setToken(signupResponse.data.token);
+                        localStorage.setItem("token", signupResponse.data.token);
+                        setUserType(userType);
+                        localStorage.setItem("userType", userType);
+
+                        if (userType === 'shop') {
+                            // If shop, redirect to the /setup page
+                            localStorage.setItem("shopEmail", decodedToken.email);
+                            navigate("/setup");
+                            toast.success("Shop signup successful via Google!");
+                        } else {
+                            // If user, navigate to the home page
+                            navigate("/");
+                            toast.success("User signup successful via Google!");
+                        }
+
+                        setShowLogin(false);
+                    } else {
+                        toast.error("Google signup failed!");
+                    }
+                } else {
+                    // For existing users, perform login
+                    setToken(token);
+                    localStorage.setItem("token", token);
+                    setUserType(userType);
+                    localStorage.setItem("userType", userType);
+
+                    navigate("/");
+
+                    setShowLogin(false);
+                    toast.success(`${userType === "shop" ? "Shop" : "User"} login successful via Google!`);
+                }
+            } else {
+                toast.error(response.data.message || "Google Login Failed!");
+            }
+        } catch (error) {
+            console.error("Error with Google Login:", error);
+            toast.error("Google Login Failed!");
         }
     };
 
@@ -205,6 +285,16 @@ const LoginPopup = ({ setShowLogin }) => {
                     )}
                 </div>
 
+                <div className="login-popup-condition">
+                    <input type="checkbox" required />
+                    <p>
+                        I have read and agree to the{" "}
+                        <Link to="#" onClick={handleTermsClick} className="highlighted-link">
+                            Terms and Conditions and Privacy Policy
+                        </Link>.
+                    </p>
+                </div>
+                
                 <button type="submit">
                     {data.role === "shop" && currentState === "Sign Up" && !otpStep
                         ? "Send OTP"
@@ -213,10 +303,18 @@ const LoginPopup = ({ setShowLogin }) => {
                             : "Submit"}
                 </button>
 
-                <div className="login-popup-condition">
-                    <input type="checkbox" required />
-                    <p>By continuing, I agree to the terms of use & privacy policy.</p>
+
+                <div className="separator">
+                    <span>OR</span>
                 </div>
+
+
+                <GoogleLogin
+                    onSuccess={onGoogleSuccess}
+                    onError={() => toast.error("Google Login Failed!")}
+                />
+
+
                 {currentState === "Sign Up" ? (
                     <p>
                         Already have an account?{" "}

@@ -20,7 +20,10 @@ import Orders from "../src/pages/Orders/Orders";
 import { StoreContext } from "./context/storeContext";
 import ShopDetails from "./pages/ShopDetails/ShopDetails";
 import RenewSubscription from "./pages/RenewSubscription/RenewSubscription";
-import NotFound from './components/NotFound/NotFound'; // Import NotFound component
+import NotFound from './components/NotFound/NotFound';
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
+import OrderDetails from './pages/OrderDetails/OrderDetails'
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -30,6 +33,9 @@ const App = () => {
     <>
       <Toaster position="top-right" reverseOrder={false} />
 
+      <ScrollToTop /> 
+
+      
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       <div className={`app-${userType}`}>
         {userType === "user" ? (
@@ -41,7 +47,9 @@ const App = () => {
               <Route path="/order" element={<PlaceOrder />} />
               <Route path="/verify" element={<Verify />} />
               <Route path="/myorders" element={<MyOrders />} />
+              <Route path="/myorders/:id" element={<OrderDetails />} />
               <Route path="/shop/:shopId" element={<ShopDetails />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </>

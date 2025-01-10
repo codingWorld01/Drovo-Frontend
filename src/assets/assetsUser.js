@@ -8,6 +8,7 @@ import menu_5 from './menu_5.jpg'
 import menu_6 from './menu_6.jpg'
 import menu_7 from './menu_7.jpeg'
 import menu_8 from './menu_8.jpg'
+import menu_9 from './menu_9.webp'
 
 
 
@@ -24,6 +25,7 @@ import bag_icon from './bag_icon.png'
 import logout_icon from './logout_icon.png'
 import parcel_icon from './parcel_icon.png'
 import location from './location.png'
+import empty_cart from './empty.png'
 import phone from './phone.png'
 import direction from './direction.png'
 import email from './email.png'
@@ -32,10 +34,19 @@ import main1 from './main1.jpg'
 import main2 from './main2.jpg'
 import main3 from './main3.jpg'
 import main4 from './main4.jpg'
-import main5 from './main5.jpg'
 import Cart from './Cart.svg'
+import deliveryBoy from './Delivery boy.jpeg'
+import fresh from './fresh.png'
+import allsupport from './24-7.png'
+import quick from './quick.png'
+import securepayment from './secure-payment.png'
+
 
 export const assetsUser = {
+    fresh,
+    allsupport,
+    quick,
+    securepayment,
     logo,
     basket_icon,
     add_icon_green,
@@ -53,14 +64,15 @@ export const assetsUser = {
     location,
     phone,
     direction,
+    empty_cart,
     email,
     basket,
     main1,
     main2,
     main3,
     main4,
-    main5,
-    Cart
+    Cart,
+    deliveryBoy
 }
 
 export const menu_list = [
@@ -95,5 +107,10 @@ export const menu_list = [
     {
         menu_name: "Cream",
         menu_image: menu_8
-    }]
+    },
+    {
+        menu_name: "Others",
+        menu_image: menu_9
+    }
+]
 

@@ -29,6 +29,7 @@ const Setup = () => {
 
     const [shopImage, setShopImage] = useState(null);
     const [termsAccepted, setTermsAccepted] = useState(false);
+    const [showTermsModal, setShowTermsModal] = useState(false);
 
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
@@ -139,7 +140,7 @@ const Setup = () => {
                         for (const pair of formDataToSend.entries()) {
                             console.log(`${pair[0]}: ${pair[1]}`);
                         }
-                        
+
 
                         // Send the formData to the backend
                         const verifyResponse = await axios.post(
@@ -220,8 +221,9 @@ const Setup = () => {
                     type="text"
                     name="name"
                     value={formData.name}
+                    onChange={onChangeHandler}
                     placeholder="Shop Name"
-                    disabled
+                    disabled={!!localStorage.getItem('shopName')}
                 />
                 <textarea
                     name="address"
@@ -237,7 +239,8 @@ const Setup = () => {
                     name="email"
                     value={formData.email}
                     placeholder="Shop Email"
-                    disabled
+                    onChange={onChangeHandler}
+                    disabled={!!localStorage.getItem('shopEmail')}
                 />
                 <input
                     type="tel"
@@ -304,13 +307,94 @@ const Setup = () => {
                         checked={termsAccepted}
                         onChange={() => setTermsAccepted(!termsAccepted)}
                     />
-                    I accept the <a href="/terms">Terms and Conditions</a>
+                    I accept the{' '}
+                    <button
+                        type="button"
+                        className="terms-button"
+                        onClick={() => setShowTermsModal(true)}
+                    >
+                        Terms and Conditions
+                    </button>
                 </div>
 
                 <button className="pay" type="submit">
                     Buy now
                 </button>
             </form>
+
+            {showTermsModal && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h2>Terms and Conditions</h2>
+                        <div className="modal-content">
+                            <p>
+                                Welcome to Drovo! By using our website, subscribing to our services, or making a purchase, you agree to the following terms and conditions. Please read them carefully before proceeding.
+                            </p>
+                            <br />
+                            <ul>
+                                <li><strong>1. General Overview</strong></li>
+                                <li>Drovo operates as a subscription-based platform for delivering dairy and essential grocery products. By creating an account, you agree to abide by these terms of use, which may be updated from time to time. Drovo reserves the right to modify or discontinue the service (or any part thereof) with or without notice at any time.</li>
+
+                                <li><strong>2. Eligibility</strong></li>
+                                <li>You must be at least 18 years old to use this platform. Minors may use the platform under parental supervision. By registering, you confirm that all information provided is accurate, complete, and up to date.</li>
+
+                                <li><strong>3. Service Subscription</strong></li>
+                                <li>Our subscription model allows you to customize and schedule recurring orders for milk, dahi (curd), bread, and other essentials. Subscriptions can be managed, paused, or canceled at any time without penalty. Users are free to select quantities and delivery timings that suit their preferences.</li>
+
+                                <li><strong>4. Ordering and Delivery</strong></li>
+                                <ul>
+                                    <li><strong>Order Placement:</strong> You can place an order via our website. Drovo ensures user-friendly browsing and selection of products.</li>
+                                    <li><strong>Delivery Time:</strong> Once an order is placed, our delivery agents strive to deliver within 10 minutes.</li>
+                                    <li><strong>Payment Options:</strong> We currently support Cash on Delivery (COD) as the primary mode of payment.</li>
+                                    <li><strong>Order Accuracy:</strong> It is the user’s responsibility to verify the order details before confirming. Errors in order placement or delivery should be reported immediately for resolution.</li>
+                                </ul>
+
+                                <li><strong>5. Pricing and Availability</strong></li>
+                                <li>Prices of products are clearly displayed and subject to periodic updates. All products are subject to availability. In case an item is out of stock, Drovo will inform you promptly and may suggest an alternative.</li>
+
+                                <li><strong>6. Quality Assurance</strong></li>
+                                <li>Drovo is committed to delivering fresh and quality dairy products and groceries. If you encounter any issues with product quality, you may contact our customer support within 24 hours for resolution.</li>
+
+                                <li><strong>7. Cancellation and Refund Policy</strong></li>
+                                <ul>
+                                    <li><strong>Cancellations:</strong> Orders can be canceled before they are dispatched for delivery.</li>
+                                    <li><strong>Refunds:</strong> Refunds for canceled orders or unsatisfactory deliveries will be processed within 3–7 business days after confirmation.</li>
+                                </ul>
+
+                                <li><strong>8. User Responsibilities</strong></li>
+                                <ul>
+                                    <li>Users must ensure accurate delivery details (e.g., address and contact information).</li>
+                                    <li>By selecting Cash on Delivery, users commit to making prompt payment upon receiving the order.</li>
+                                    <li>Repeated refusal of deliveries or non-payment may result in service restrictions.</li>
+                                </ul>
+
+                                <li><strong>9. Limitation of Liability</strong></li>
+                                <li>Drovo is not responsible for delays caused by unforeseen circumstances (e.g., traffic, weather, or technical issues). Our liability for any claim arising from the service is limited to the price of the product purchased.</li>
+
+                                <li><strong>10. Privacy Policy</strong></li>
+                                <li>User data, including address and purchase history, will be handled in compliance with our Privacy Policy. We are committed to protecting your personal information.</li>
+
+                                <li><strong>11. Dispute Resolution</strong></li>
+                                <li>Any disputes or claims arising from or related to Drovo’s services shall be resolved amicably through customer support. If unresolved, disputes may be subject to local jurisdiction laws.</li>
+
+                                <li><strong>12. Amendments</strong></li>
+                                <li>Drovo reserves the right to update these terms and conditions. Continued use of the service after updates constitutes acceptance of the revised terms.</li>
+
+                                <li><strong>13. Commission on Pre-orders</strong></li>
+                                <li>Drovo offers a 2% commission to milk stores on pre-orders placed through the platform. For example, on a ₹100 pre-order, Drovo will credit ₹2 to the milk store as commission. The commission is calculated based on the total value of pre-orders fulfilled and is disbursed at the end of the month. The commission is subject to accurate order fulfillment and adherence to Drovo's quality and delivery standards.</li>
+                            </ul>
+
+                        </div>
+                        <button
+                            className="close-modal"
+                            onClick={() => setShowTermsModal(false)}
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };

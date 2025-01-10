@@ -1,3 +1,96 @@
+.hero-section-new {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #fef9f8, #fff);
+    height: 90vh;
+    overflow: hidden;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.hero-text {
+    max-width: 600px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.hero-text .highlight {
+    color: tomato;
+    /* Green accent */
+    font-weight: 900;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: tomato;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: rgb(255, 71, 39);
+}
+
+.hero-image {
+    max-width: 500px;
+    animation: fadeIn 1.5s ease-in-out;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    /* Added background shadow */
+    border-radius: 15px;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    /* Adjusted border radius to match the shadow */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    /* Shadow for image */
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+/* Shop List Section */
 .shop-list {
     padding: 40px 20px;
     text-align: center;
@@ -9,6 +102,7 @@
     color: #333;
     text-transform: uppercase;
     margin-bottom: 40px;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .shop-grid {
@@ -26,17 +120,12 @@
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    background: #fff;
 }
 
 .shop-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.shop-card-content {
-    background-color: #fff;
-    border-radius: 15px;
-    overflow: hidden;
 }
 
 .shop-image-home {
@@ -49,7 +138,6 @@
 
 .shop-info-home {
     padding: 20px;
-    padding-top: 5px;
     text-align: center;
 }
 
@@ -63,11 +151,110 @@
 .shop-info-home p {
     font-size: 1rem;
     color: #777;
-    margin-bottom: 0;
 }
 
-/* Responsive design */
+/* Features Section */
+.features-section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.features-section h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+.feature {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.feature h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.feature p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.feature:hover img {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+
+    .features-section h2 {
+        font-size: 2rem;
+    }
+
+    .feature h3 {
+        font-size: 1.5rem;
+    }
+
+    .feature p {
+        font-size: 1rem;
+    }
+
+    .hero-section-new {
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-text {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 2.4rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    .hero-image {
+        max-width: 100%;
+    }
+
     .shop-grid {
         flex-direction: column;
         align-items: center;
@@ -78,7 +265,7 @@
     }
 
     .shop-list h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: 600;
     }
 }

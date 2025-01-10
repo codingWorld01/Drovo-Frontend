@@ -31,6 +31,14 @@
     outline-color: tomato;
 }
 
+.cancellation-policy {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #888;
+    text-align: center;
+}
+
+
 /* Google Maps Autocomplete Input Style */
 #street-address {
     width: 100%;
@@ -225,6 +233,11 @@ input:disabled {
     color: #aaa;
 }
 
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
 
 
 @media screen and (max-width: 768px) {
@@ -234,6 +247,7 @@ input:disabled {
         margin-top: 50px;
         padding: 1rem;
     }
+
     .cart-total-final {
         padding: 15px;
     }

@@ -1,3 +1,4 @@
+/* Header container */
 .header {
     width: 100%;
     margin-top: 5vh;
@@ -6,29 +7,48 @@
     position: relative;
 }
 
+/* Add a styled border to the slideshow container */
 .slideshow-container {
     position: relative;
-    width: 70vw;
-    height: 80vh;
+    width: 80%;
     overflow: hidden;
-    cursor: pointer;
+    height: 80%;
+    /* Adjust height as needed */
+    border: 5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    animation: glow 2s infinite alternate;
 }
 
-.slideshow-images {
+@keyframes glow {
+    from {
+        border-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+    }
+
+    to {
+        border-color: tomato;
+        box-shadow: 0px 0px 20px tomato;
+    }
+}
+
+
+/* Sliding container */
+.sliding-container {
     display: flex;
-    transition: transform 1s ease-in-out;
-    /* Horizontal sliding transition */
+    transition: transform 0.6s ease-in-out;
+    width: 100%;
 }
 
-.slideshow-image {
-    flex: 0 0 100%;
-    /* Ensures each image takes full width of the container */
-    background-size: cover;
-    background-position: center;
+/* Individual slides */
+.sliding-container img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
+/* Navigation arrows */
 .slideshow-nav {
     position: absolute;
     top: 50%;
@@ -40,7 +60,6 @@
     z-index: 10;
 }
 
-/* General Styles for Slideshow */
 .slideshow-nav button {
     background: rgba(0, 0, 0, 0.3);
     color: white;
@@ -48,13 +67,9 @@
     border: none;
     padding: 1rem;
     cursor: pointer;
-    transition: background 0.3s ease;
     border-radius: 50%;
-    /* Make the buttons circular */
     width: 50px;
-    /* Define a fixed width */
     height: 50px;
-    /* Define a fixed height */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,7 +82,7 @@
 /* Dots for Navigation */
 .slideshow-dots {
     position: absolute;
-    bottom: 5px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -91,52 +106,27 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-/* Mobile Specific Adjustments */
-/* Mobile Specific Adjustments */
-@media (max-width: 480px) {
-
-    /* Slideshow container on mobile */
+/* Responsive design */
+@media (max-width: 768px) {
     .slideshow-container {
-        width: 100vw;
-        height: 26vh;
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        height: 100%;
+        border: 5px solid rgba(255, 255, 255, 0.5);
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        animation: glow 2s infinite alternate;
     }
 
-    /* Arrows at the leftmost and rightmost sides on mobile */
     .slideshow-nav button {
-        display: block;
-        font-size: 1.2rem;  /* Smaller font size for mobile */
-        padding: 0.3rem;    /* Reduced padding for smaller buttons */
-        background: rgba(0, 0, 0, 0.3);
-        position: absolute;
-        z-index: 10;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 40px;        /* Smaller width */
-        height: 40px;       /* Smaller height */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .slideshow-nav button.prev {
-        left: 0%;
-        /* Position leftmost */
-    }
-
-    .slideshow-nav button.next {
-        right: 0%;
-        /* Position rightmost */
-    }
-
-    /* Dots on mobile */
-    .slideshow-dots {
-        bottom: 5px;
-        gap: 8px;
+        font-size: 1.5rem;
+        width: 40px;
+        height: 40px;
     }
 
     .dot {
         width: 10px;
         height: 10px;
-        /* Smaller dots */
     }
 }

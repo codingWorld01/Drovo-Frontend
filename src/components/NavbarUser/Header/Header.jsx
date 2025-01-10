@@ -9,16 +9,13 @@ const Header = () => {
     assetsUser.main2,
     assetsUser.main3,
     assetsUser.main4,
-    assetsUser.main5
   ];
 
-  // State to track the current image index and slideshow state (active or paused)
+  // State to track the current image index and transition direction
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false); // Controls whether the slideshow is paused
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState(0);
+  const [transitionDirection, setTransitionDirection] = useState('');
 
-  const sliderRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false); // Controls whether the slideshow is paused
 
   // Preload images for smoother transitions
   useEffect(() => {
@@ -26,54 +23,40 @@ const Header = () => {
       const img = new Image();
       img.src = image;
     });
-  }, []);
+  }, [images]);
 
   // Function to change the image
   const changeImage = (direction) => {
-    setCurrentImageIndex((prevIndex) => {
-      if (direction === 'next') {
-        return (prevIndex + 1) % images.length;
-      } else if (direction === 'prev') {
-        return (prevIndex - 1 + images.length) % images.length;
-      }
-      return prevIndex;
-    });
+    // Set the direction of the transition
+    setTransitionDirection(direction);
+
+    // Update the image index after the animation starts
+    setTimeout(() => {
+      setCurrentImageIndex((prevIndex) => {
+        if (direction === 'next') {
+          return (prevIndex + 1) % images.length;
+        } else if (direction === 'prev') {
+          return (prevIndex - 1 + images.length) % images.length;
+        }
+        return prevIndex;
+      });
+    }, 300); // Matches the CSS animation duration
+
+    // Reset the transition after the animation completes
+    setTimeout(() => {
+      setTransitionDirection('');
+    }, 600); // Allow for smoother animations
   };
 
   // Set up interval for automatic image change
   useEffect(() => {
     if (!isPaused) {
       const interval = setInterval(() => changeImage('next'), 5000); // Change image every 5 seconds
-      return () => clearInterval(interval); // Clear interval on component unmount or when paused
+      return () => clearInterval(interval);
     }
   }, [isPaused]);
 
-  // Drag-to-slide functionality
-  const handleDragStart = (e) => {
-    setIsDragging(true);
-    setDragStart(e.clientX || e.touches[0].clientX);
-  };
-
-  const handleDragMove = (e) => {
-    if (isDragging) {
-      const diff = (e.clientX || e.touches[0].clientX) - dragStart;
-      if (diff > 100) {
-        changeImage('prev');
-        setDragStart(e.clientX || e.touches[0].clientX); // Update drag start position
-        setIsDragging(false);
-      } else if (diff < -100) {
-        changeImage('next');
-        setDragStart(e.clientX || e.touches[0].clientX); // Update drag start position
-        setIsDragging(false);
-      }
-    }
-  };
-
-  const handleDragEnd = () => {
-    setIsDragging(false);
-    setDragStart(0);
-  };
-
+  // Pause slideshow on hover
   const handleMouseEnter = () => setIsPaused(true);
   const handleMouseLeave = () => setIsPaused(false);
 
@@ -83,33 +66,24 @@ const Header = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div
-        className="slideshow-container"
-        ref={sliderRef}
-        onMouseDown={handleDragStart}
-        onMouseMove={handleDragMove}
-        onMouseUp={handleDragEnd}
-        onTouchStart={handleDragStart}
-        onTouchMove={handleDragMove}
-        onTouchEnd={handleDragEnd}
-      >
-        {/* Image Display */}
+      <div className="slideshow-container">
+        {/* Sliding Image Container */}
         <div
-          className="slideshow-image"
+          className={`sliding-container ${transitionDirection}`}
           style={{
-            backgroundImage: `url(${images[currentImageIndex]})`,
-            transition: 'background-image 1s ease-in-out', // Smooth image transition
+            transform: `translateX(${-currentImageIndex * 100}%)`,
           }}
-        ></div>
+        >
+          {images.map((image, index) => (
+            <img key={index} src={image} alt={`Slide ${index}`} />
+          ))}
+        </div>
 
         {/* Navigation Arrows */}
         <div className="slideshow-nav">
-          {/* Prev button */}
           <button className="prev" onClick={() => changeImage('prev')}>
             &#10094;
           </button>
-
-          {/* Next button */}
           <button className="next" onClick={() => changeImage('next')}>
             &#10095;
           </button>

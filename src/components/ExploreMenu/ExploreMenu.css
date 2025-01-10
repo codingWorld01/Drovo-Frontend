@@ -71,8 +71,8 @@
 }
 
 .explore-menu-list-item img {
-    width: 7vw;
-    height: 12vh;
+    width: 100px;
+    height: 80px;
     min-width: 80px;
     cursor: pointer;
     border-radius: 50%;

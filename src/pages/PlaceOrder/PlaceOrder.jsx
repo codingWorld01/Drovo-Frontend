@@ -12,6 +12,7 @@ const PlaceOrder = () => {
   const { getTotalCartAmount, token, food_list, cartItems, url, shopId, setCartItems, logout } = useContext(StoreContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [addressError, setAddressError] = useState("");
 
 
   const [data, setData] = useState({
@@ -32,8 +33,17 @@ const PlaceOrder = () => {
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
-    setData((prevData) => ({ ...prevData, [name]: value }));
+
+    setData((prevData) => {
+      const isStreetChanged = name === "street";
+      return {
+        ...prevData,
+        [name]: value,
+        ...(isStreetChanged ? { latitude: "", longitude: "" } : {}),
+      };
+    });
   };
+
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -51,28 +61,35 @@ const PlaceOrder = () => {
             if (status === "OK" && results[0]) {
               const address = results[0].formatted_address;
               setData((prevData) => ({ ...prevData, street: address }));
+              setAddressError(""); // Clear any previous error
               toast.success("Location fetched successfully!");
+              setAddressError(
+                "If Address seems incorrect. Please use autocomplete to fix it."
+              );
             } else {
               toast.error("Unable to fetch location. Please try again.");
             }
           });
         },
         () => {
+          setAddressError(
+            "Unable to access location. Please enable location services or use autocomplete."
+          );
           toast.error("Unable to access location. Please enable location services.");
         }
       );
     } else {
+      setAddressError("Geolocation is not supported by this browser.");
       toast.error("Geolocation is not supported by this browser.");
     }
   };
 
   useEffect(() => {
-    
-    if(Object.keys(cartItems).length === 0 || getTotalCartAmount() == 0)
-    {
+
+    if (Object.keys(cartItems).length === 0 || getTotalCartAmount() == 0) {
       return navigate("/")
     }
-    
+
     if (window.google) {
       const input = document.getElementById("street-address");
       const autocomplete = new window.google.maps.places.Autocomplete(input, {
@@ -94,7 +111,7 @@ const PlaceOrder = () => {
             latitude,
             longitude,
           }));
-
+          setAddressError("");
           setIsAddressFilled(true);
         }
       });
@@ -192,14 +209,35 @@ const PlaceOrder = () => {
       address: data,
       items: food_list
         .filter((item) => cartItems[shopId]?.[item._id] > 0)
-        .map((item) => ({
-          ...item,
-          quantity: cartItems[shopId][item._id],
-        })),
+        .map((item) => {
+          const baseQuantity = cartItems[shopId][item._id] * item.quantity; // Total quantity in base unit
+          let dynamicQuantity = baseQuantity;
+          let dynamicUnit = item.unit;
+
+          // Convert grams to kg or ml to liter if applicable
+          if (item.unit === 'grams' && baseQuantity >= 1000) {
+            dynamicQuantity = (baseQuantity / 1000).toFixed(2);
+            dynamicUnit = 'kg';
+          } else if (item.unit === 'ml' && baseQuantity >= 1000) {
+            dynamicQuantity = (baseQuantity / 1000).toFixed(2);
+            dynamicUnit = 'liter';
+          }
+
+          // Remove trailing ".00" if applicable
+          const formattedQuantity = parseFloat(dynamicQuantity) % 1 === 0
+            ? parseInt(dynamicQuantity, 10)
+            : dynamicQuantity;
+
+          return {
+            ...item,
+            quantity: `${formattedQuantity} ${dynamicUnit}`, // Update quantity with dynamic unit
+          };
+        }),
       amount: getTotalCartAmount(),
       deliveryCharge: deliveryCharge,
       shopId: shopId,
     };
+
 
     await axios
       .post(`${url}/api/order/place`, orderData, { headers: { token } })
@@ -259,6 +297,8 @@ const PlaceOrder = () => {
             <img src={assetsUser.location} alt="" className="button-icon" />
           </button>
           <p className="or-separator">OR</p>
+
+          {addressError && <p className="error-message">{addressError}</p>}
           <textarea
             id="street-address"
             required
@@ -269,6 +309,7 @@ const PlaceOrder = () => {
             placeholder="Select nearby location..."
             rows="2"
           ></textarea>
+
           {isAddressFilled && (
             <>
               <input
@@ -332,6 +373,10 @@ const PlaceOrder = () => {
                 <b>&#8377;{getTotalCartAmount() + deliveryCharge}</b>
               </div>
               <button type="submit">Confirm Order</button>
+
+              <div className="cancellation-policy">
+                <p><strong>Cancellation Policy:</strong> Orders cannot be cancelled once packed for delivery. In case of unexpected delays, a refund will be provided, if applicable.</p>
+              </div>
             </div>
           </div>
         </div>

@@ -107,7 +107,7 @@ const Orders = ({ url }) => {
                   <p className="order-item-food">
                     {order.items.map((item, idx) => (
                       <span key={idx}>
-                        {item.name} x {item.quantity}
+                        {item.name} - {item.quantity}
                         {idx !== order.items.length - 1 && ', '}
                       </span>
                     ))}
