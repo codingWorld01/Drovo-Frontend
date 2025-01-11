@@ -294,7 +294,7 @@ const LoginPopup = ({ setShowLogin }) => {
                         </Link>.
                     </p>
                 </div>
-                
+
                 <button type="submit">
                     {data.role === "shop" && currentState === "Sign Up" && !otpStep
                         ? "Send OTP"
@@ -309,10 +309,12 @@ const LoginPopup = ({ setShowLogin }) => {
                 </div>
 
 
-                <GoogleLogin
-                    onSuccess={onGoogleSuccess}
-                    onError={() => toast.error("Google Login Failed!")}
-                />
+                <div className="google-login-wrapper">
+                    <GoogleLogin
+                        onSuccess={onGoogleSuccess}
+                        onError={() => toast.error("Google Login Failed!")}
+                    />
+                </div>
 
 
                 {currentState === "Sign Up" ? (

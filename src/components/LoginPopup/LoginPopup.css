@@ -21,6 +21,18 @@
     animation: fadeIn 0.5s;
 }
 
+.google-login-wrapper {
+    display: flex;
+    justify-content: center; /* Center align the button */
+    width: 100%; /* Make it responsive */
+}
+
+.google-login-wrapper > div {
+    width: 100%; /* Make the button take full width */
+    max-width: 400px; /* Optional: Limit the max width */
+}
+
+
 .login-popup-title {
     display: flex;
     justify-content: space-between;
