@@ -111,7 +111,7 @@ const Setup = () => {
             const order = await initiatePayment();
 
             const options = {
-                key: import.meta.env.VITE_ROZARPAY_KEY_ID,
+                key: import.meta.env.VITE_ROZAPAY_KEY_ID,
                 amount: order.amount,
                 currency: order.currency,
                 name: formData.name,
@@ -223,6 +223,7 @@ const Setup = () => {
                     value={formData.name}
                     onChange={onChangeHandler}
                     placeholder="Shop Name"
+                    autoComplete='off'
                     disabled={!!localStorage.getItem('shopName')}
                 />
                 <textarea
@@ -248,6 +249,7 @@ const Setup = () => {
                     value={formData.phone}
                     onChange={onChangeHandler}
                     placeholder="Shop Phone"
+                    autoComplete='off'
                     required
                 />
                 <div className="file-input-container">

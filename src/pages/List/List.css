@@ -48,22 +48,6 @@
     margin-bottom: 10px;
 }
 
-.list-item .cursor {
-    position: absolute;
-    top: 12px;
-    right: 22px;
-    color: red;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.list-item .cursor:hover {
-    color: darkred;
-    transform: scale(1.2);
-}
-
 .list-item .info-row {
     display: flex;
     justify-content: space-between;
@@ -81,36 +65,56 @@
     color: #333;
 }
 
+/* Description styling */
+.description-row {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #444;
+    text-align: left;
+}
+
+.buttons-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.edit-btn, .delete-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+    background-color: #007bff;
+    width: 49%;
+    color: white;
+    border: none;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-btn {
+    width: 49%;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
 .no-items {
     text-align: center;
     font-size: 16px;
     color: #888;
     margin-top: 20px;
     font-style: italic;
-}
-
-/* Button Styles */
-.list-item button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-top: 15px;
-}
-
-.list-item button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
-
-.list-item button:active {
-    transform: translateY(0);
-    background-color: #004085;
 }
 
 /* Mobile-specific CSS */
@@ -132,11 +136,6 @@
 
     .list-item img {
         max-height: 150px;
-    }
-
-    .list-item .cursor {
-        top: 12px;
-        right: 20px;
     }
 
     .list-item .info-row {

@@ -1,6 +1,5 @@
 .food-item {
     width: 100%;
-    margin: auto;
     border-radius: 15px;
     box-shadow: 0px 0px 10px #00000015;
     transition: 0.3s;
@@ -98,6 +97,6 @@
 
 @media screen and (max-width: 768px) {
     .food-item {
-        width: 80%;
+        width: 100%;
     }
 }

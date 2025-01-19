@@ -32,7 +32,6 @@
     }
 }
 
-
 /* Sliding container */
 .sliding-container {
     display: flex;
@@ -58,6 +57,12 @@
     justify-content: space-between;
     transform: translateY(-50%);
     z-index: 10;
+    opacity: 0; /* Hide by default */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.slideshow-container:hover .slideshow-nav {
+    opacity: 1; /* Show on hover */
 }
 
 .slideshow-nav button {

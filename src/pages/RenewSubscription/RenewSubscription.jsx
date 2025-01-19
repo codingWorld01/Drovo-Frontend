@@ -60,7 +60,7 @@ const RenewSubscription = () => {
             }
 
             const options = {
-                key: import.meta.env.VITE_ROZARPAY_KEY_ID,
+                key: import.meta.env.VITE_ROZAPAY_KEY_ID,
                 amount: order.amount,
                 currency: order.currency,
                 name: "Shop Subscription Renewal",

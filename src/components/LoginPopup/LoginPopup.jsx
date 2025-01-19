@@ -33,10 +33,10 @@ const LoginPopup = ({ setShowLogin }) => {
 
     const handleTermsClick = (e) => {
         e.preventDefault(); // Prevent default link behavior
-        setShowLogin(false); // Hide the login popup
-        navigate("/terms-and-conditions"); // Navigate to Terms and Conditions
+        const url = "/terms-and-conditions"; // Define the URL
+        window.open(url, "_blank"); // Open the URL in a new tab
     };
-
+    
 
     const onSendOtp = async (event) => {
         event.preventDefault();

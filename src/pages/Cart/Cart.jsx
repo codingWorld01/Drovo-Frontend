@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { assetsUser } from '../../assets/assetsUser';
 
-const Cart = () => {
+const Cart = ({setShowLogin}) => {
   const { cartItems, food_list, removeFromCart, addToCart, getTotalCartAmount, url, token, shopId, deleteFromCart, logout } = useContext(StoreContext);
   const navigate = useNavigate();
   const [shopDetails, setShopDetails] = useState(null);
@@ -44,7 +44,7 @@ const Cart = () => {
 
   const handleCheckout = () => {
     if (!token) {
-      toast.error("Please log in to proceed to checkout.");
+      setShowLogin(true);
       return;
     }
 

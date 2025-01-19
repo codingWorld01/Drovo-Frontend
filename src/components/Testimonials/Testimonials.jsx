@@ -3,11 +3,11 @@ import './Testimonials.css';
 
 const Testimonials = () => {
     const testimonials = [
-        { quote: "Drovo has transformed how I get my daily dairy essentials. Always fresh and on time!", name: "Neha Sharma" },
-        { quote: "The delivery is quick, and the quality of the products is top-notch. Highly recommend Drovo!", name: "Ramesh Verma" },
-        { quote: "I love the convenience Drovo offers. A lifesaver for my busy schedule.", name: "Anjali Gupta" },
-        { quote: "The best dairy products with unmatched customer service. Always a delight!", name: "Rahul Deshmukh" },
-        { quote: "Drovo makes ordering easy, and I trust them for all my dairy needs.", name: "Simran Kaur" },
+        { quote: "Drovo has transformed how I get my daily essentials, whether it's dairy, groceries, or bakery items. Always fresh and on time!", name: "Neha Sharma" },
+        { quote: "The delivery is quick, and the quality of the products is top-notch, whether it's dairy, grocery, or bakery. Highly recommend Drovo!", name: "Ramesh Verma" },
+        { quote: "I love the convenience Drovo offers for all my daily needs—dairy, grocery, and bakery. A lifesaver for my busy schedule.", name: "Anjali Gupta" },
+        { quote: "The best products with unmatched customer service, whether it's dairy, groceries, or bakery items. Always a delight!", name: "Rahul Deshmukh" },
+        { quote: "Drovo makes ordering easy for all my needs—dairy, grocery, and bakery. I trust them completely.", name: "Simran Kaur" },
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);

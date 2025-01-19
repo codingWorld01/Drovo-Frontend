@@ -47,11 +47,11 @@ const Home = () => {
                 <div className="hero-content">
                     <div className="hero-text">
                         <h1>
-                            Fresh Dairy Products Delivered <br />
+                            All Fresh Products Delivered <br />
                             <span className="highlight">Quickly & Safely</span> to Your Doorstep
                         </h1>
                         <p>
-                            Enjoy the goodness of premium-quality dairy products, sourced fresh
+                            Enjoy the goodness of premium-quality dairy, grocery, and bakery products, sourced fresh
                             from trusted shops and delivered with care to your home.
                         </p>
                         <button className="cta-button" onClick={scrollToShops}>Explore Now</button>
@@ -69,7 +69,7 @@ const Home = () => {
                     <div className="feature">
                         <img src={assetsUser.fresh} alt="Fresh Products" />
                         <h3>Fresh Products</h3>
-                        <p>We deliver only the freshest dairy products directly to your door.</p>
+                        <p>We deliver only the freshest dairy, grocery, and bakery products directly to your door.</p>
                     </div>
                     <div className="feature">
                         <img src={assetsUser.quick} alt="Quick Delivery" />
@@ -88,7 +88,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-
 
             <Header />
             {/* Shop List Section */}
@@ -122,7 +121,6 @@ const Home = () => {
                         ))}
                 </div>
             </div>
-
 
             {/* Testimonials Section */}
             <Testimonials />

@@ -50,7 +50,7 @@ const FoodItem = ({ id, name, price, description, image, shopId, quantity, unit 
             <div className="food-item-info">
                 <div className="food-item-name-rating">
                     <p>{name}</p>
-                    <span>{quantity} {unit === 'grams' ? 'g' : unit}</span> {/* Show "g" instead of "grams" */}
+                    <span>{quantity} {unit === 'grams' ? 'g' : unit === 'dozen' ? 'Dozen' : unit}</span> {/* Show "Dozen" for dozen unit */}
                 </div>
                 <p className="food-item-desc">{description}</p>
                 <p className="food-item-price">&#8377;{price}</p>

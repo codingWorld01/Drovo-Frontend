@@ -13,17 +13,33 @@ const Add = ({ url }) => {
         name: "",
         description: "",
         price: "",
-        category: "Milk",
-        unit: "liter",  // default unit
+        shopType: "Dairy",  // default shop type
+        category: "Milk",   // default category for Dairy shop
+        unit: "liter",      // default unit
         quantity: 1
     });
 
     let navigate = useNavigate();
 
+    const shopCategories = {
+        Dairy: ["Milk", "Butter", "Yogurt", "Ghee", "Cheese", "Paneer", "Cream", "Others"],
+        Grocery: ["Fruits", "Vegetables", "Rice", "Spices", "Flour", "Cereals", "Others"],
+        Bakery: ["Bread", "Cakes", "Pastries", "Cookies", "Buns", "Others"]
+    };
+
     const onChangeHandler = (event) => {
         const name = event.target.name;
         const value = event.target.value;
         setData(data => ({ ...data, [name]: value }));
+
+        // If shop type changes, reset category 
+        if (name === 'shopType') {
+            setData({
+                ...data,
+                shopType: value,
+                category: shopCategories[value][0], // Reset to the first category for the selected shop type
+            });
+        }
     };
 
     const onSubmitHandler = async (event) => {
@@ -33,6 +49,7 @@ const Add = ({ url }) => {
         formData.append("name", data.name);
         formData.append("description", data.description);
         formData.append("price", Number(data.price));
+        formData.append("shopType", data.shopType);
         formData.append("category", data.category);
         formData.append("unit", data.unit);
         formData.append("quantity", data.quantity);
@@ -51,6 +68,7 @@ const Add = ({ url }) => {
                         name: "",
                         description: "",
                         price: "",
+                        shopType: "Dairy",
                         category: "Milk",
                         unit: "liter",
                         quantity: 1
@@ -100,27 +118,48 @@ const Add = ({ url }) => {
                     />
                 </div>
                 <div className="add-product-name flex-col">
-                    <p>Product name</p>
+                    <p>Item Name</p>
                     <input
                         onChange={onChangeHandler}
                         value={data.name}
                         type="text"
                         name="name"
+                        autoComplete='off'
                         placeholder="Type here"
                     />
                 </div>
                 <div className="add-product-description flex-col">
-                    <p>Product description</p>
+                    <p>Item Description</p>
                     <textarea
                         onChange={onChangeHandler}
                         value={data.description}
                         name="description"
-                        rows="6"
+                        rows="3"
                         placeholder="Write content here"
                     ></textarea>
                 </div>
 
                 <div className="add-category-price">
+                    {/* Shop Type Selection */}
+                    <div className="add-shop-type flex-col">
+                        <p>Shop Type</p>
+                        <select onChange={onChangeHandler} name="shopType" value={data.shopType}>
+                            <option value="Dairy">Dairy</option>
+                            <option value="Grocery">Grocery</option>
+                            <option value="Bakery">Bakery</option>
+                        </select>
+                    </div>
+
+                    {/* Category Dropdown based on Shop Type */}
+                    <div className="add-category flex-col">
+                        <p>Category</p>
+                        <select onChange={onChangeHandler} name="category" value={data.category}>
+                            {shopCategories[data.shopType]?.map((cat) => (
+                                <option key={cat} value={cat}>{cat}</option>
+                            ))}
+                        </select>
+                    </div>
+
 
                     {/* Add Quantity Input */}
                     <div className="add-quantity flex-col">
@@ -135,7 +174,6 @@ const Add = ({ url }) => {
                         />
                     </div>
 
-
                     {/* Add Unit Selection */}
                     <div className="add-unit flex-col">
                         <p>Unit</p>
@@ -145,29 +183,11 @@ const Add = ({ url }) => {
                             <option value="item">Item</option>
                             <option value="grams">grams</option>
                             <option value="ml">ml</option>
+                            <option value="dozen">Dozen</option>
                         </select>
                     </div>
 
-                </div>
-
-                <div className="add-category-price">
-
-
-
-                    <div className="add-category flex-col">
-                        <p>Category</p>
-                        <select onChange={onChangeHandler} name="category">
-                            <option value="Milk">Milk</option>
-                            <option value="Butter">Butter</option>
-                            <option value="Yogurt">Yogurt</option>
-                            <option value="Ghee">Ghee</option>
-                            <option value="Cheese">Cheese</option>
-                            <option value="Paneer">Paneer</option>
-                            <option value="Cake">Cake</option>
-                            <option value="Cream">Cream</option>
-                        </select>
-                    </div>
-
+                    {/* Product Price */}
                     <div className="add-price flex-col">
                         <p>Product Price</p>
                         <input
@@ -179,7 +199,7 @@ const Add = ({ url }) => {
                         />
                     </div>
                 </div>
-                <button type="submit" className="add-btn">ADD</button>
+                <button type="submit" className="add-button">ADD</button>
             </form>
         </div>
     );

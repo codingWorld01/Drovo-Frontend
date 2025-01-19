@@ -21,7 +21,6 @@ const List = ({ url }) => {
                 setList(response.data.data);
             }
         } catch (error) {
-
             if (error.response && error.response.status === 401) {
                 if (error.response.data.message === 'Token expired') {
                     logout();
@@ -74,7 +73,6 @@ const List = ({ url }) => {
                     {list.map((item, index) => (
                         <div key={index} className="list-item">
                             <img src={`${url}/images/${item.image}`} alt={item.name} />
-                            <p className="cursor" onClick={() => removeFood(item._id)}>X</p>
                             <div className="info-row">
                                 <p><span>Name:</span> {item.name}</p>
                                 <p><span>Category:</span> {item.category}</p>
@@ -82,6 +80,15 @@ const List = ({ url }) => {
                             <div className="info-row">
                                 <p><span>Unit:</span> {item.quantity} {item.unit}</p>
                                 <p><span>Price:</span> ₹{item.price}</p>
+                            </div>
+                            {/* Description */}
+                            <div className="description-row">
+                                <p><span>Description:</span> {item.description}</p>
+                            </div>
+                            {/* Edit and Delete buttons */}
+                            <div className="buttons-row">
+                                <button className="edit-btn" onClick={() => navigate(`/edit/${item._id}`)}>Edit</button>
+                                <button className="delete-btn" onClick={() => removeFood(item._id)}>Delete</button>
                             </div>
                         </div>
                     ))}
